@@ -8,13 +8,31 @@ import json
 import feedparser
 import time
 
+def store(dict):
+    with open('channels.json', 'w') as json_file:
+        json.dump(dict, json_file)
+
+def add(key, value):
+    dict = getDict()
+    dict[key] = value
+    store(dict)
+
+def remove(key):
+    dict = getDict()
+    del dict[key]
+    store(dict)
+
+def changeWebhook(wh):
+    dict = getDict()
+    dict["webHookUrl"] = wh
+    store(dict)
+
 def getDict():
     with open('channels.json') as f:
         return json.load(f)
         
 def send():
     channelsIds = list(getDict().values())
-    ChannelsNames = list(getDict().keys())
 
     actualHour = datetime.now().strftime("%H")
     actualDay = date.today().strftime("%d")
@@ -33,3 +51,6 @@ def send():
         if lastEntryHour == actualHour and lastEntryDay == actualDay:
             webhook = DiscordWebhook(webhookUrl, content=lastVideo.link)
             response = webhook.execute()
+
+if __name__ == "__main__":
+    send()

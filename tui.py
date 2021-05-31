@@ -30,6 +30,10 @@ class AddForm(npyscreen.ActionForm):
         self.channelId.value = ""
         self.parentApp.setNextForm('MAIN')
 
+    def on_ok(self):
+        main.add(self.channelName.value, self.channelName.value)
+        self.on_cancel()
+
 class DelForm(npyscreen.ActionForm):
     def create(self):
         self.channelName = self.add(npyscreen.TitleText, name="Name:")
@@ -40,6 +44,10 @@ class DelForm(npyscreen.ActionForm):
         self.channelName.value = ""
         self.parentApp.setNextForm('MAIN')
 
+    def on_ok(self):
+        main.remove(self.channelName.value)
+        self.on_cancel()
+
 class WebhookForm(npyscreen.ActionForm):
     def create(self):
         self.webhook = self.add(npyscreen.TitleText, name="Webhook url:")
@@ -47,6 +55,10 @@ class WebhookForm(npyscreen.ActionForm):
     def on_cancel(self):
         self.webhook.value = ""
         self.parentApp.setNextForm('MAIN')
+
+    def on_ok(self):
+        main.changeWebhook(self.webhook.value)
+        on_cancel()
 
 class App(npyscreen.NPSAppManaged):
     def onStart(self):
