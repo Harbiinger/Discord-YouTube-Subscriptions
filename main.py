@@ -39,9 +39,6 @@ def send():
 
     webhookUrl = channelsIds[0]
 
-    webhook = DiscordWebhook(webhookUrl, content="___ All new videos of today ___")
-    response = webhook.execute()
-
     for id in channelsIds[1:]:
         channelFeed = feedparser.parse("https://www.youtube.com/feeds/videos.xml?channel_id=" + id)
         lastVideo = channelFeed.entries[0]
