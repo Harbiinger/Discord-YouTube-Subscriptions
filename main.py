@@ -14,7 +14,13 @@ def store(dict):
 
 def add(key, value):
     dict = getDict()
-    dict[key] = value
+    new_key = ""
+    for c in key:
+        if c == ' ':
+            new_key += '+'
+        else:
+            new_key += c
+    dict[new_key] = value
     store(dict)
 
 def remove(key):

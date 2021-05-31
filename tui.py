@@ -31,7 +31,7 @@ class AddForm(npyscreen.ActionForm):
         self.parentApp.setNextForm('MAIN')
 
     def on_ok(self):
-        main.add(self.channelName.value, self.channelName.value)
+        main.add(self.channelName.value, self.channelId.value)
         self.on_cancel()
 
 class DelForm(npyscreen.ActionForm):
