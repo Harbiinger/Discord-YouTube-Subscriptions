@@ -1,3 +1,4 @@
+import main
 import npyscreen
 
 class MainForm(npyscreen.ActionFormV2):
@@ -32,6 +33,8 @@ class AddForm(npyscreen.ActionForm):
 class DelForm(npyscreen.ActionForm):
     def create(self):
         self.channelName = self.add(npyscreen.TitleText, name="Name:")
+        for channel in list(main.getDict().keys())[1:]: 
+            self.add(npyscreen.ButtonPress, name=channel)
 
     def on_cancel(self):
         self.channelName.value = ""

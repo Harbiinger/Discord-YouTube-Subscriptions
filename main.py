@@ -8,25 +8,28 @@ import json
 import feedparser
 import time
 
-with open('channels.json') as f:
-    channelsDict = json.load(f)
+def getDict():
+    with open('channels.json') as f:
+        return json.load(f)
         
-channelsIds = list(channelsDict.values())
+def send():
+    channelsIds = list(getDict().values())
+    ChannelsNames = list(getDict().keys())
 
-actualHour = datetime.now().strftime("%H")
-actualDay = date.today().strftime("%d")
+    actualHour = datetime.now().strftime("%H")
+    actualDay = date.today().strftime("%d")
 
-webhookUrl = channelsIds[0]
+    webhookUrl = channelsIds[0]
 
-webhook = DiscordWebhook(webhookUrl, content="___ All new videos of today ___")
-response = webhook.execute()
+    webhook = DiscordWebhook(webhookUrl, content="___ All new videos of today ___")
+    response = webhook.execute()
 
-for id in channelsIds[1:]:
-    channelFeed = feedparser.parse("https://www.youtube.com/feeds/videos.xml?channel_id=" + id)
-    lastVideo = channelFeed.entries[0]
-    lastEntryHour = lastVideo.published[11:13]
-    lastEntryDay = lastVideo.published[8:10]
+    for id in channelsIds[1:]:
+        channelFeed = feedparser.parse("https://www.youtube.com/feeds/videos.xml?channel_id=" + id)
+        lastVideo = channelFeed.entries[0]
+        lastEntryHour = lastVideo.published[11:13]
+        lastEntryDay = lastVideo.published[8:10]
 
-    if lastEntryHour == actualHour and lastEntryDay == actualDay:
-        webhook = DiscordWebhook(webhookUrl, content=lastVideo.link)
-        response = webhook.execute()
+        if lastEntryHour == actualHour and lastEntryDay == actualDay:
+            webhook = DiscordWebhook(webhookUrl, content=lastVideo.link)
+            response = webhook.execute()
