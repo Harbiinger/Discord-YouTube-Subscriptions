@@ -34,7 +34,7 @@ def getDict():
 def send():
     channelsIds = list(getDict().values())
 
-    actualHour = datetime.now().strftime("%H")
+    actualHour = datetime.utcnow().strftime("%H")
     actualDay = date.today().strftime("%d")
 
     webhookUrl = channelsIds[0]
