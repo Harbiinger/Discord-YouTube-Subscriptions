@@ -58,7 +58,7 @@ class WebhookForm(npyscreen.ActionForm):
 
     def on_ok(self):
         main.changeWebhook(self.webhook.value)
-        on_cancel()
+        self.on_cancel()
 
 class App(npyscreen.NPSAppManaged):
     def onStart(self):
